@@ -34,7 +34,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update car" do
-    patch car_url(@car), params: { car: { model: @car.model, part: @car.part, vin: @car.vin } }
+	  patch car_url(@car), params: { car: { model: @car.model, vin: @car.vin, part: @car.part } }
     assert_redirected_to car_url(@car)
   end
 
