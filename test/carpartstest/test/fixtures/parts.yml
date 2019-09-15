@@ -2,8 +2,6 @@
 
 one:
   name: MyString
-  car: one
 
 two:
   name: MyString
-  car: two

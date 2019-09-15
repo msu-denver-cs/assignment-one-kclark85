@@ -14,7 +14,6 @@ class PartsTest < ApplicationSystemTestCase
     visit parts_url
     click_on "New Part"
 
-    fill_in "Car", with: @part.car_id
     fill_in "Name", with: @part.name
     click_on "Create Part"
 
@@ -26,7 +25,6 @@ class PartsTest < ApplicationSystemTestCase
     visit parts_url
     click_on "Edit", match: :first
 
-    fill_in "Car", with: @part.car_id
     fill_in "Name", with: @part.name
     click_on "Update Part"
 
