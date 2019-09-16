@@ -20,10 +20,10 @@
     <%= form.label :vin %>
     <%= form.number_field :vin %>
   </div>
-
-  <div class="field">
+  
+  <div class = "field">
     <%= form.label :part %>
-    <%= form.text_field :part %>
+    <%= form.collection_select :part, Part.all, :id, :name, prompt: true %>
   </div>
 
   <div class="actions">
