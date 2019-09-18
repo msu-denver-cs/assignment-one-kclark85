@@ -15,10 +15,14 @@ class CarsController < ApplicationController
   # GET /cars/new
   def new
     @car = Car.new
+    @makes = Make.all
+    @parts = Part.all
   end
 
   # GET /cars/1/edit
   def edit
+    @makes = Make.all
+    @parts = Part.all
   end
 
   # POST /cars

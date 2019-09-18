@@ -15,10 +15,14 @@ class MakesController < ApplicationController
   # GET /makes/new
   def new
     @make = Make.new
+    @cars = Car.all
+    @parts = Part.all
   end
 
   # GET /makes/1/edit
   def edit
+    @cars = Car.all
+    @parts = Part.all
   end
 
   # POST /makes
