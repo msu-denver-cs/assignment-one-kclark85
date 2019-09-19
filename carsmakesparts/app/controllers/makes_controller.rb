@@ -15,10 +15,14 @@ class MakesController < ApplicationController
   # GET /makes/new
   def new
     @make = Make.new
+    @cars = Car.all
+    @parts = Part.all
   end
 
   # GET /makes/1/edit
   def edit
+    @cars = Car.all
+    @parts = Part.all
   end
 
   # POST /makes
@@ -69,6 +73,6 @@ class MakesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def make_params
-      params.require(:make).permit(:name, :country)
+      params.require(:make).permit(:name, :country, :car_ids => [], :part_ids => [])
     end
 end
