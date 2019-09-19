@@ -4,9 +4,9 @@
       <h2><%= pluralize(car.errors.count, "error") %> prohibited this car from being saved:</h2>
 
       <ul>
-        <% car.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
+      <% car.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
       </ul>
     </div>
   <% end %>
@@ -19,16 +19,6 @@
   <div class="field">
     <%= form.label :vin %>
     <%= form.number_field :vin %>
-  </div>
-
-  <div class="field">
-    <%= form.label :make_id %>
-    <%= form.collection_check_boxes :make_id, Car.all, :id, :name  %>
-  </div>
-
-  <div class="field">
-    <%= form.label :part_id %>
-    <%= form.collection_check_boxes :part_id, Car.all, :id, :name %>
   </div>
 
   <div class="actions">
