@@ -23,14 +23,14 @@
 
 
   <div class="field">
-    <%= form.label :make_id %>
-    <%= form.collection_check_boxes :make_ids, @makes, :id, :name %>
+    <%= form.label :make %>
+    <%= form.collection_check_boxes :make, @makes, :id, :name %>
  </div>
 
  
   <div class="field">
     <%= form.label :part_id %>
-    <%= form.collection_check_boxes :part_ids, @makes, :id, :name %>
+    <%= form.collection_check_boxes :part_ids, @parts, :id, :name %>
   </div>
 
   <div class="actions">

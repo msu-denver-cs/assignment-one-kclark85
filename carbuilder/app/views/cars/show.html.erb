@@ -16,11 +16,5 @@
   <% end %>
 </ul>
 
-<ul>
-  <% @car.makes.each do |make| %>
-    <li><%= make.name %> </li>
-  <% end %>
-</ul>
-
 <%= link_to 'Edit', edit_car_path(@car) %> |
 <%= link_to 'Back', cars_path %>
