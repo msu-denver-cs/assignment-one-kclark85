@@ -4,4 +4,8 @@ class Car < ApplicationRecord
   def vin
     rand 1000000000..9999999999
   end
+
+  def makes
+    Make.all
+  end
 end

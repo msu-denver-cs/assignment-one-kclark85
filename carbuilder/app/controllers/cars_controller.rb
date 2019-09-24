@@ -23,6 +23,7 @@ class CarsController < ApplicationController
   def edit
     @makes = Make.all
     @parts = Part.all
+    @cars = Car.all
   end
 
   # POST /cars
