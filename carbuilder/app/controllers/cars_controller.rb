@@ -66,6 +66,11 @@ class CarsController < ApplicationController
     end
   end
 
+  def search
+    @cars = Car.where("model like ?", "%#{params[:query]}%")
+    render :index
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
