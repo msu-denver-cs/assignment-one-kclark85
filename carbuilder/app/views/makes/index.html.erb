@@ -27,3 +27,13 @@
 <br>
 
 <%= link_to 'New Make', new_make_path %>
+
+<%= form_tag(search_makes_url, method: "get") do%>
+  <%= label_tag(:query, "Search for makes:")%>
+  <%= text_field_tag(:query)%>
+  <%= submit_tag("Search")%>
+<% end %>
+
+<%= link_to 'Parts', 'parts#index'%>
+
+<%= link_to 'Cars', 'cars#index'%>

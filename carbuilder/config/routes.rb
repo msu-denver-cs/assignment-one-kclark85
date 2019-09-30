@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
   root 'cars#index'
-  resources :parts
-  resources :makes
+  resources :parts do
+    collection do
+      get 'search'
+    end
+  end
+  resources :makes do
+    collection do
+      get 'search'
+    end
+  end
   resources :cars do
     collection do
       get 'search'
