@@ -45,4 +45,9 @@ class PartsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to parts_url
   end
+
+  test "should search part" do
+    get search_parts_url
+    assert_response :success
+  end
 end

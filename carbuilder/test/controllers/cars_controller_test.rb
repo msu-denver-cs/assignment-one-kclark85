@@ -3,6 +3,7 @@ require 'test_helper'
 class CarsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @car = cars(:one)
+    @make = makes(:one)
   end
 
   test "should get index" do
@@ -45,4 +46,10 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to cars_url
   end
+
+  test "should search car" do
+    get search_cars_url
+    assert_response :success
+  end
+
 end

@@ -7,7 +7,7 @@
 
 <ul>
   <% @part.cars.each do |car| %>
-    <li><%= car.name %> </li>
+    <li><%= car.model %> </li>
   <% end %>
 </ul>
 <%= link_to 'Edit', edit_part_path(@part) %> |
