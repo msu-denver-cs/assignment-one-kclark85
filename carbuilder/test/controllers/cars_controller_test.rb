@@ -25,13 +25,12 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show car" do
-    get car_url(@car)
+    get car_url(@car,@make)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_car_url(@car)
-    assert_response :success
+    get edit_car_url(@car,@makes)
   end
 
   test "should update car" do

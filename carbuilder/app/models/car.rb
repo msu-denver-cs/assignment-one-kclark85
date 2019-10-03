@@ -1,5 +1,5 @@
 class Car < ApplicationRecord
-  has_one :make
+  belongs_to :make
   has_and_belongs_to_many :parts
 
   def vin
@@ -10,6 +10,12 @@ class Car < ApplicationRecord
     Make.all
   end
 
+  #def make(name,country)
+  #  Make.last
+  #end
+
   validates :model, presence: true
   validates :vin, presence: true
+  #validates :make, presence: true
+
 end
