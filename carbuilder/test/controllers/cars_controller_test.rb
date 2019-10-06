@@ -50,5 +50,28 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     get search_cars_url
     assert_response :success
   end
+  
+  test "shouldn't find a missing car" do
+    assert Car.where("model like ?", "Not Here").length == 0
+  end
+
+  test "should find peopel from the fixture" do
+    assert Car.where("model like ?", "MyString").length == 2
+  end
+  
+  test "searches always return 200" do
+    get search_cars_url, params: {search: "test"}
+    assert_response :success
+  end
+
+  test "should find MyString" do
+    get search_cars_url, params: { search: "MyString"}
+    assert_select 'td', 'MyString'
+  end
+
+  test "shouldn't find Tesla" do
+    get search_cars_url, params: { search: "Tesla" }
+    assert_select 'td', false
+  end
 
 end
