@@ -3,7 +3,9 @@
 one:
   model: MyString
   vin: 1
+  make: one
 
 two:
   model: MyString
   vin: 1
+  make: one

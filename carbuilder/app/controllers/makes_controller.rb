@@ -21,6 +21,7 @@ class MakesController < ApplicationController
 
   # GET /makes/1/edit
   def edit
+    @makes = Make.all
     @cars = Car.all
     @parts = Part.all
   end
@@ -63,6 +64,11 @@ class MakesController < ApplicationController
       format.html { redirect_to makes_url, notice: 'Make was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def search
+    @makes = Make.where("name like ?", "%#{params[:query]}%")
+    render :index
   end
 
   private

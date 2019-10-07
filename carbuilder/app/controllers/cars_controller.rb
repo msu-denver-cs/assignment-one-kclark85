@@ -21,6 +21,7 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def edit
+    @cars = Car.all
     @makes = Make.all
     @parts = Part.all
   end
@@ -29,7 +30,6 @@ class CarsController < ApplicationController
   # POST /cars.json
   def create
     @car = Car.new(car_params)
-
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
@@ -65,6 +65,11 @@ class CarsController < ApplicationController
     end
   end
 
+  def search
+    @cars = Car.where("model like ?", "%#{params[:query]}%")
+    render :index
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
@@ -73,6 +78,6 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:model, :vin, :part_ids => [], :make_ids => [])
+      params.require(:car).permit(:model, :vin, :make_id, :part_ids => [])
     end
 end

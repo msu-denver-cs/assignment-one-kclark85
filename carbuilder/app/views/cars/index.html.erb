@@ -27,3 +27,13 @@
 <br>
 
 <%= link_to 'New Car', new_car_path %>
+
+<%= form_tag(search_cars_url, method: "get") do%>
+  <%= label_tag(:query, "Search for car(by model):")%>
+  <%= text_field_tag(:query)%>
+  <%= submit_tag("Search")%>
+<% end %>
+
+<%= link_to 'Parts', 'parts#index'%>
+
+<%= link_to 'Makes', 'makes#index'%>

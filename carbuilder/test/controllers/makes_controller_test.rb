@@ -45,4 +45,9 @@ class MakesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to makes_url
   end
+
+  test "should search make" do
+    get search_makes_url
+    assert_response :success
+  end
 end

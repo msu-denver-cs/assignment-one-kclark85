@@ -25,3 +25,13 @@
 <br>
 
 <%= link_to 'New Part', new_part_path %>
+
+<%= form_tag(search_parts_url, method: "get") do%>
+  <%= label_tag(:query, "Search for part:")%>
+  <%= text_field_tag(:query)%>
+  <%= submit_tag("Search")%>
+<% end %>
+
+<%= link_to 'Makes', 'makes#index'%>
+
+<%= link_to 'Cars', 'cars#index'%>
