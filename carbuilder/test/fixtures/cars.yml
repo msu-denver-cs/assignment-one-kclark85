@@ -6,6 +6,6 @@ one:
   make: one
 
 two:
-  model: MyString
-  vin: 1
-  make: one
+  model: MyStringtwo
+  vin: 2
+  make: two

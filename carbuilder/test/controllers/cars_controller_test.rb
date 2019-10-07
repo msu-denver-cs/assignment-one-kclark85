@@ -55,8 +55,8 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     assert Car.where("model like ?", "Not Here").length == 0
   end
 
-  test "should find peopel from the fixture" do
-    assert Car.where("model like ?", "MyString").length == 2
+  test "should find cars from the fixture" do
+    assert Car.where("model like ?", "MyString").length == 1
   end
   
   test "searches always return 200" do
@@ -71,7 +71,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
 
   test "shouldn't find Tesla" do
     get search_cars_url, params: { search: "Tesla" }
-    assert_select 'td', false
+    assert_select "td", {count: 0, text: "Tesla"}, "Find no matches"
   end
 
 end
