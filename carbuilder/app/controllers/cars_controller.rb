@@ -21,17 +21,15 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def edit
+    @cars = Car.all
     @makes = Make.all
     @parts = Part.all
-    @cars = Car.all
   end
 
   # POST /cars
   # POST /cars.json
   def create
     @car = Car.new(car_params)
-    @makes = Make.all
-    @parts = Part.all
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
@@ -80,6 +78,6 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:model, :vin, :make_id => [], :part_ids => [])
+      params.require(:car).permit(:model, :vin, :make_id, :part_ids => [])
     end
 end
