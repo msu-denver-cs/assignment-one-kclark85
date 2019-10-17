@@ -3,7 +3,7 @@ require 'test_helper'
 class CarsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @car = cars(:one)
-    @make = makes(:one)
+    @make_id = makes(:one).id
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create car" do
     assert_difference('Car.count') do
-      post cars_url, params: { car: { model: @car.model, vin: @car.vin } }
+      post cars_url, params: { car: { model: @car.model, vin: @car.vin, make_id: @make_id  } }
     end
 
     assert_redirected_to car_url(Car.last)
@@ -34,7 +34,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update car" do
-    patch car_url(@car), params: { car: { model: @car.model, vin: @car.vin, make: @car.make_id } }
+    patch car_url(@car), params: { car: { model: @car.model, vin: @car.vin, make: @car.make.name } }
     assert_redirected_to car_url(@car)
   end
 
@@ -55,8 +55,8 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     assert Car.where("model like ?", "Not Here").length == 0
   end
 
-  test "should find peopel from the fixture" do
-    assert Car.where("model like ?", "MyString").length == 2
+  test "should find cars from the fixture" do
+    assert Car.where("model like ?", "MyString").length == 1
   end
   
   test "searches always return 200" do
@@ -71,7 +71,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
 
   test "shouldn't find Tesla" do
     get search_cars_url, params: { search: "Tesla" }
-    assert_select 'td', false
+    assert_select "td", {count: 0, text: "Tesla"}, "Find no matches"
   end
 
 end
