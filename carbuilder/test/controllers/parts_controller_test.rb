@@ -50,4 +50,27 @@ class PartsControllerTest < ActionDispatch::IntegrationTest
     get search_parts_url
     assert_response :success
   end
+
+  test "shouldn't find a missing part" do
+    assert Part.where("name like ?", "Not Here").length == 0
+  end
+
+  test "should find cars from the fixture" do
+    assert Part.where("name like ?", "MyString").length == 2
+  end
+  
+  test "searches always return 200" do
+    get search_parts_url, params: {search: "test"}
+    assert_response :success
+  end
+
+  test "should find MyString" do
+    get search_parts_url, params: { search: "MyString"}
+    assert_select 'td', 'MyString'
+  end
+
+  test "shouldn't find Fusion Drive" do
+    get search_parts_url, params: { search: "Fusion Drive" }
+    assert_select "td", {count: 0, text: "Tesla"}, "Find no matches"
+  end
 end

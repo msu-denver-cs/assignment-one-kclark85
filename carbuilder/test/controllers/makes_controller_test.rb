@@ -50,4 +50,27 @@ class MakesControllerTest < ActionDispatch::IntegrationTest
     get search_makes_url
     assert_response :success
   end
+
+  test "shouldn't find a missing make" do
+    assert Make.where("name like ?", "Not Here").length == 0
+  end
+
+  test "should find makes from the fixture" do
+    assert Make.where("name like ?", "MyString").length == 2
+  end
+  
+  test "searches always return 200" do
+    get search_makes_url, params: {search: "test"}
+    assert_response :success
+  end
+
+  test "should find MyString" do
+    get search_makes_url, params: { search: "MyString"}
+    assert_select 'td', 'MyString'
+  end
+
+  test "shouldn't find Tesla" do
+    get search_makes_url, params: { search: "Tesla" }
+    assert_select "td", {count: 0, text: "Tesla"}, "Find no matches"
+  end
 end
