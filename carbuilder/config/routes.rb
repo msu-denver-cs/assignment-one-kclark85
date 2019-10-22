@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'cars#index'
+  devise_for :users
+  root to: 'cars#index'
   resources :parts do
     collection do
       get 'search'
