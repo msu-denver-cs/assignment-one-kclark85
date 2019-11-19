@@ -1,0 +1,95 @@
+commit f5d501180095f4b2acc60d83b234111452db055a
+Author: kclark85 <david@DESKTOP-STG543J.localdomain>
+Date:   Tue Oct 22 13:20:05 2019 -0600
+
+    added authn to most pages
+
+diff --git a/carbuilder/app/controllers/cars_controller.rb b/carbuilder/app/controllers/cars_controller.rb
+index 955eb1a9..0af9a5e6 100644
+--- a/carbuilder/app/controllers/cars_controller.rb
++++ b/carbuilder/app/controllers/cars_controller.rb
+@@ -1,5 +1,6 @@
+ class CarsController < ApplicationController
+   before_action :set_car, only: [:show, :edit, :update, :destroy]
++  before_action :authenticate_user!
+ 
+   # GET /cars
+   # GET /cars.json
+diff --git a/carbuilder/app/controllers/makes_controller.rb b/carbuilder/app/controllers/makes_controller.rb
+index f4352917..d277a2d8 100644
+--- a/carbuilder/app/controllers/makes_controller.rb
++++ b/carbuilder/app/controllers/makes_controller.rb
+@@ -1,5 +1,6 @@
+ class MakesController < ApplicationController
+   before_action :set_make, only: [:show, :edit, :update, :destroy]
++  before_action :authenticate_user!
+ 
+   # GET /makes
+   # GET /makes.json
+diff --git a/carbuilder/app/controllers/parts_controller.rb b/carbuilder/app/controllers/parts_controller.rb
+index e7608fc4..88304abc 100644
+--- a/carbuilder/app/controllers/parts_controller.rb
++++ b/carbuilder/app/controllers/parts_controller.rb
+@@ -1,5 +1,6 @@
+ class PartsController < ApplicationController
+   before_action :set_part, only: [:show, :edit, :update, :destroy]
++  before_action :authenticate_user!
+ 
+   # GET /parts
+   # GET /parts.json
+diff --git a/carbuilder/app/views/layouts/application.html.erb b/carbuilder/app/views/layouts/application.html.erb
+index a4bfef13..635398c6 100644
+--- a/carbuilder/app/views/layouts/application.html.erb
++++ b/carbuilder/app/views/layouts/application.html.erb
+@@ -19,6 +19,10 @@
+ 
+     <%= link_to 'Home', root_path %>
+ 
++    <%= link_to 'Log Out',
++        destroy_user_session_path,
++        method: :delete %>
++
+     <%= yield %>
+   </body>
+ </html>
+diff --git a/carbuilder/config/routes.rb b/carbuilder/config/routes.rb
+index 1ed09d31..97006c9e 100644
+--- a/carbuilder/config/routes.rb
++++ b/carbuilder/config/routes.rb
+@@ -1,5 +1,6 @@
+ Rails.application.routes.draw do
+   devise_for :users
++
+   root to: 'cars#index'
+   resources :parts do
+     collection do
+diff --git a/carbuilder/db/schema.rb b/carbuilder/db/schema.rb
+index 6c6bb2e9..40cb7887 100644
+--- a/carbuilder/db/schema.rb
++++ b/carbuilder/db/schema.rb
+@@ -10,7 +10,7 @@
+ #
+ # It's strongly recommended that you check this file into your version control system.
+ 
+-ActiveRecord::Schema.define(version: 2019_10_06_164713) do
++ActiveRecord::Schema.define(version: 2019_10_22_190800) do
+ 
+   create_table "cars", force: :cascade do |t|
+     t.string "model"
+@@ -45,4 +45,16 @@ ActiveRecord::Schema.define(version: 2019_10_06_164713) do
+     t.datetime "updated_at", null: false
+   end
+ 
++  create_table "users", force: :cascade do |t|
++    t.string "email", default: "", null: false
++    t.string "encrypted_password", default: "", null: false
++    t.string "reset_password_token"
++    t.datetime "reset_password_sent_at"
++    t.datetime "remember_created_at"
++    t.datetime "created_at", null: false
++    t.datetime "updated_at", null: false
++    t.index ["email"], name: "index_users_on_email", unique: true
++    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
++  end
++
+ end
