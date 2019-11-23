@@ -1,5 +1,7 @@
 class Car < ApplicationRecord
+  has_many :cars_makes
   belongs_to :make
+  delegate :cars_makes, :to => :make
   has_and_belongs_to_many :parts
 
   def vin
