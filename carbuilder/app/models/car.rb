@@ -16,6 +16,6 @@ class Car < ApplicationRecord
 
   validates :model, presence: true
   validates :vin, presence: true
-  #validates :make, presence: true
+  validates :make, presence: true
 
 end
