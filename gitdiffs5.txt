@@ -1,0 +1,60 @@
+commit 72ca1632b2b2eb3abc35ca3b96494ce00ddcea4d
+Author: kclark85 <david@DESKTOP-STG543J.localdomain>
+Date:   Sat Nov 23 09:45:43 2019 -0700
+
+    trouble getting makes from car join table
+
+diff --git a/carbuilder/app/models/car.rb b/carbuilder/app/models/car.rb
+index 162c55f8..470cc7e5 100644
+--- a/carbuilder/app/models/car.rb
++++ b/carbuilder/app/models/car.rb
+@@ -1,5 +1,7 @@
+ class Car < ApplicationRecord
++  has_many :cars_makes
+   belongs_to :make
++  delegate :cars_makes, :to => :make
+   has_and_belongs_to_many :parts
+ 
+   def vin
+diff --git a/carbuilder/app/models/make.rb b/carbuilder/app/models/make.rb
+index d81a4363..04de3e21 100644
+--- a/carbuilder/app/models/make.rb
++++ b/carbuilder/app/models/make.rb
+@@ -1,5 +1,6 @@
+ class Make < ApplicationRecord
+-  has_many :cars
++  has_many :cars_makes
++  has_many :cars, through: :cars_makes
+   validates :name, presence: true
+   validates :country, presence: true
+ end
+diff --git a/carbuilder/db/schema.rb b/carbuilder/db/schema.rb
+index 914d5dfe..b35d236f 100644
+--- a/carbuilder/db/schema.rb
++++ b/carbuilder/db/schema.rb
+@@ -10,7 +10,7 @@
+ #
+ # It's strongly recommended that you check this file into your version control system.
+ 
+-ActiveRecord::Schema.define(version: 2019_11_21_222133) do
++ActiveRecord::Schema.define(version: 2019_11_23_160942) do
+ 
+   create_table "cars", force: :cascade do |t|
+     t.string "model"
+@@ -22,9 +22,13 @@ ActiveRecord::Schema.define(version: 2019_11_21_222133) do
+     t.index ["make_id"], name: "index_cars_on_make_id"
+   end
+ 
+-  create_table "cars_makes", id: false, force: :cascade do |t|
+-    t.integer "car_id", null: false
+-    t.integer "make_id", null: false
++  create_table "cars_makes", force: :cascade do |t|
++    t.integer "car_id"
++    t.integer "make_id"
++    t.datetime "created_at", null: false
++    t.datetime "updated_at", null: false
++    t.index ["car_id"], name: "index_cars_makes_on_car_id"
++    t.index ["make_id"], name: "index_cars_makes_on_make_id"
+   end
+ 
+   create_table "cars_parts", force: :cascade do |t|
