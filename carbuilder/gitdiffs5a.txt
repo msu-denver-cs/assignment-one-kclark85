@@ -1,0 +1,59 @@
+commit c3228cbc721133f017af64662d661a03830cfd92
+Author: kclark85 <david@DESKTOP-STG543J.localdomain>
+Date:   Tue Nov 26 16:02:37 2019 -0700
+
+    fixed issue with makes not loading
+
+diff --git a/carbuilder/app/models/car.rb b/carbuilder/app/models/car.rb
+index 470cc7e5..75a68e1c 100644
+--- a/carbuilder/app/models/car.rb
++++ b/carbuilder/app/models/car.rb
+@@ -1,7 +1,7 @@
+ class Car < ApplicationRecord
+-  has_many :cars_makes
++  #has_many :cars_makes
+   belongs_to :make
+-  delegate :cars_makes, :to => :make
++  #delegate :cars_makes, :to => :make
+   has_and_belongs_to_many :parts
+ 
+   def vin
+diff --git a/carbuilder/app/views/cars/_car.json.jbuilder b/carbuilder/app/views/cars/_car.json.jbuilder
+index 324e3d4c..5b59847a 100644
+--- a/carbuilder/app/views/cars/_car.json.jbuilder
++++ b/carbuilder/app/views/cars/_car.json.jbuilder
+@@ -1,2 +1,2 @@
+-json.extract! car, :id, :model, :vin, :created_at, :updated_at
++json.extract! car, :id, :model, :vin, :created_at, :updated_at, :make_id
+ json.url car_url(car, format: :json)
+diff --git a/carbuilder/public/index.html b/carbuilder/public/index.html
+index 86f4febc..12e83965 100644
+--- a/carbuilder/public/index.html
++++ b/carbuilder/public/index.html
+@@ -15,7 +15,13 @@
+     <span v-if="cars_selected">
+         <div v-for="car in cars">
+ 		<!-- cannot figure out how to pull car make from join table -->
+-		<li>{{car.model}}, {{car.make_id}}, {{car.vin}}</li>
++		<li>{{car.model}}, {{car.vin}},
++		     <span v-for="make in makes">
++			<span v-if="car.make_id === make.id">
++			   {{ make.name }}
++			</span>
++		     </span>
++		</li>
+         </div>
+     </span>
+     <span v-if="parts_selected">
+@@ -26,11 +32,6 @@
+     <span v-if="makes_selected">
+         <div v-for="make in makes">
+ 		<li>{{make.name}}, {{make.country}}</li>
+-            <div v-for="car in cars">
+-                <span v-if="car.make_id === make.id">
+-                    {{ car.model }}
+-                </span>
+-            </div>
+         </div>
+     </span>
+     </ul>
