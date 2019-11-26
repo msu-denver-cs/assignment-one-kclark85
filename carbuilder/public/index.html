@@ -15,7 +15,13 @@
     <span v-if="cars_selected">
         <div v-for="car in cars">
 		<!-- cannot figure out how to pull car make from join table -->
-		<li>{{car.model}}, {{car.make_id}}, {{car.vin}}</li>
+		<li>{{car.model}}, {{car.vin}},
+		     <span v-for="make in makes">
+			<span v-if="car.make_id === make.id">
+			   {{ make.name }}
+			</span>
+		     </span>
+		</li>
         </div>
     </span>
     <span v-if="parts_selected">
@@ -26,11 +32,6 @@
     <span v-if="makes_selected">
         <div v-for="make in makes">
 		<li>{{make.name}}, {{make.country}}</li>
-            <div v-for="car in cars">
-                <span v-if="car.make_id === make.id">
-                    {{ car.model }}
-                </span>
-            </div>
         </div>
     </span>
     </ul>
